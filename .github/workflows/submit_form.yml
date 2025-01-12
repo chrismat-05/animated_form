@@ -29,13 +29,17 @@ jobs:
           git config --global user.email "chrismaje63@gmail.com"
           git config --global user.name "chrismat-05"
 
+      - name: Pull latest changes
+        run: |
+          git pull https://x-access-token:${{ secrets.form_animated }}@github.com/chrismat-05/animated_form.git main --rebase
+
       - name: Create response file and push data
         run: |
-          mkdir -p data # Ensure the 'data' folder exists
+          mkdir -p data
           echo "Name: ${{ github.event.inputs.name }}" >> data/responses.csv
           echo "Phone: ${{ github.event.inputs.phone }}" >> data/responses.csv
           echo "Guests: ${{ github.event.inputs.guests }}" >> data/responses.csv
-          echo "" >> data/responses.csv # Add a blank line for readability
+          echo "" >> data/responses.csv
 
           git add data/responses.csv
           git commit -m "Add form response"
