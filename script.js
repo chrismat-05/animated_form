@@ -54,7 +54,6 @@ form.addEventListener('submit', async (e) => {
   showThankYouMessage();
 });
 
-// Submit form data to Google Sheets
 async function submitForm(data) {
   try {
     const response = await fetch('https://script.google.com/macros/s/AKfycbzI4KTsi9c00UeAl4HgnD8YUBw3Puacscwwnm0x-BF3c1pG4QwCN0jyxEF2Q8YzDzEz/exec', {
@@ -64,6 +63,16 @@ async function submitForm(data) {
       },
       body: JSON.stringify(data),
     });
+
+    if (!response.ok) {
+      throw new Error('Failed to submit the form. Please try again.');
+    }
+
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
 
     if (!response.ok) {
       throw new Error('Failed to submit the form. Please try again.');
