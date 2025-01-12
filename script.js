@@ -68,7 +68,7 @@ async function submitForm(data) {
       throw new Error('Failed to submit the form. Please try again.');
     }
 
-  } catch (error) {
+   catch (error) {
     alert(error.message);
   }
 }
