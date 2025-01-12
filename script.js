@@ -73,15 +73,6 @@ async function submitForm(data) {
   }
 }
 
-
-    if (!response.ok) {
-      throw new Error('Failed to submit the form. Please try again.');
-    }
-  } catch (error) {
-    alert(error.message);
-  }
-}
-
 // Show thank-you message
 function showThankYouMessage() {
   form.classList.add('hidden');
