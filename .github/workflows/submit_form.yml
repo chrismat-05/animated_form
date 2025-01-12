@@ -1,0 +1,24 @@
+name: Submit Form Data to Repository
+
+on:
+  workflow_dispatch:  # Triggered manually or by API call
+
+jobs:
+  append_form_data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+
+      - name: Append form data to CSV
+        run: |
+          echo "Name, Phone, Guests" >> data/responses.csv
+          echo "${{ github.event.inputs.name }}, ${{ github.event.inputs.phone }}, ${{ github.event.inputs.guests }}" >> data/responses.csv
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "Your GitHub Username"
+          git config --global user.email "your-email@example.com"
+          git add .
+          git commit -m "Add form response"
+          git push
