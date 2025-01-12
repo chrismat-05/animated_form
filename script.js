@@ -5,11 +5,11 @@ document.getElementById('dataForm').addEventListener('submit', async (e) => {
   const guests = document.getElementById('guests').value;
 
   // Send form data to GitHub Action API endpoint
-  await fetch('https://api.github.com/repos/chrismat_05/animated_form/dispatches', {
+  await fetch('https://api.github.com/repos/YOUR_USERNAME/YOUR_REPOSITORY/dispatches', { // Replace with your GitHub API URL
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`,  // Reference to the environment variable
+      'Authorization': `Bearer ${process.env.FORM_ANIMATED}`,  // Use the secret in a secure way
     },
     body: JSON.stringify({
       event_type: 'submit_form', // Customize the event type
