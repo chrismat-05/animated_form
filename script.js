@@ -5,12 +5,20 @@ document.getElementById('dataForm').addEventListener('submit', async (e) => {
   const guests = document.getElementById('guests').value;
 
   // Send form data to GitHub Action API endpoint
-  await fetch('https://your-webhook-url-here', { // Replace this URL with your GitHub Action API URL
+  await fetch('https://api.github.com/repos/chrismat_05/animated_form/dispatches', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`,  // Reference to the environment variable
     },
-    body: JSON.stringify({ name, phone, guests }),
+    body: JSON.stringify({
+      event_type: 'submit_form', // Customize the event type
+      client_payload: {
+        name,
+        phone,
+        guests
+      }
+    }),
   })
   .then(response => response.json())
   .then(data => {
