@@ -1,80 +1,24 @@
-const form = document.getElementById('animatedForm');
-const steps = document.querySelectorAll('.form-step');
-const nextBtns = document.querySelectorAll('.next-btn');
-const prevBtns = document.querySelectorAll('.prev-btn');
-const yesBtn = document.querySelector('.yes-btn');
-const noBtn = document.querySelector('.no-btn');
-const thankYou = document.querySelector('.thank-you');
-
-let currentStep = 0;
-
-// Move to the next step
-nextBtns.forEach((btn) => {
-  btn.addEventListener('click', () => {
-    steps[currentStep].classList.remove('active');
-    currentStep++;
-    steps[currentStep].classList.add('active');
-  });
-});
-
-// Move to the previous step
-prevBtns.forEach((btn) => {
-  btn.addEventListener('click', () => {
-    steps[currentStep].classList.remove('active');
-    currentStep--;
-    steps[currentStep].classList.add('active');
-  });
-});
-
-// Handle "Yes" button
-yesBtn.addEventListener('click', () => {
-  steps[currentStep].classList.remove('active');
-  currentStep++;
-  steps[currentStep].classList.add('active');
-});
-
-// Handle "No" button (submit form without additional guests)
-noBtn.addEventListener('click', async (e) => {
+document.getElementById('dataForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  await submitForm({ guests: 0 });
-  showThankYouMessage();
-});
-
-// Handle form submission
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  // Collect form data
   const name = document.getElementById('name').value;
   const phone = document.getElementById('phone').value;
-  const guests = document.getElementById('number').value || 0;
+  const guests = document.getElementById('guests').value;
 
-  // Submit data
-  await submitForm({ name, phone, guests });
-  showThankYouMessage();
+  // Send form data to GitHub Action API endpoint
+  await fetch('https://your-webhook-url-here', { // Replace this URL with your GitHub Action API URL
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ name, phone, guests }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+    alert('Form submitted successfully!');
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+    alert('Failed to submit form.');
+  });
 });
-
-async function submitForm(data) {
-  try {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbyWt27W0HKmFaxC_arSP8nbkw2EkmnJkH1NNG8ftkmNn9VJyB7pU19KD07lQFOf8QRj/exec', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to submit the form. Please try again.');
-    }
-
-  } catch (error) {
-    alert(error.message);
-  }
-}
-
-// Show thank-you message
-function showThankYouMessage() {
-  form.classList.add('hidden');
-  thankYou.classList.remove('hidden');
-}
