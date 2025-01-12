@@ -56,7 +56,7 @@ form.addEventListener('submit', async (e) => {
 
 async function submitForm(data) {
   try {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbzI4KTsi9c00UeAl4HgnD8YUBw3Puacscwwnm0x-BF3c1pG4QwCN0jyxEF2Q8YzDzEz/exec', {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbyWt27W0HKmFaxC_arSP8nbkw2EkmnJkH1NNG8ftkmNn9VJyB7pU19KD07lQFOf8QRj/exec', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
