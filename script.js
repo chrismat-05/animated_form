@@ -57,7 +57,7 @@ form.addEventListener('submit', async (e) => {
 // Submit form data to Google Sheets
 async function submitForm(data) {
   try {
-    const response = await fetch(https://script.google.com/macros/s/AKfycbxYOBrQRrIRy5RlWbEbhy4y5hwdOBLohJ34yxJdLMstJjR9yG6u7bdUlrmg7wy3Puhd/exec, {
+    const response = await fetch(https://script.google.com/macros/s/AKfycbzs8SkcKsZa9iv4mLK9tIERNkSJu0dix9IlNcZU4-rxCngIqi3dNQzvMTQ3WFSKfBU_/exec, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
