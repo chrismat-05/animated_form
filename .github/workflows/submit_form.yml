@@ -1,34 +1,40 @@
 name: Submit Form Data
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'User Name'
+        required: true
+        type: string
+      phone:
+        description: 'Phone Number'
+        required: true
+        type: string
+      guests:
+        description: 'Number of Guests'
+        required: true
+        type: string
 
 jobs:
   submitFormData:
     runs-on: ubuntu-latest
+
     steps:
-      # Check out the repository
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Set up Git configuration
       - name: Set up Git configuration
         run: |
           git config --global user.email "youremail@example.com"
           git config --global user.name "YourName"
 
-      # Create response file and push data
       - name: Create response file and push data
         run: |
-          echo "Name: ${{ secrets.form_cma }}" >> responses.csv
-          echo "Phone: ${{ secrets.FORM_PHONE }}" >> responses.csv
-          echo "Guests: ${{ secrets.FORM_GUESTS }}" >> responses.csv
-
-          git add responses.csv
+          echo "Name: ${{ github.event.inputs.name }}" >> data/responses.csv
+          echo "Phone: ${{ github.event.inputs.phone }}" >> data/responses.csv
+          echo "Guests: ${{ github.event.inputs.guests }}" >> data/responses.csv
+          
+          git add data/responses.csv
           git commit -m "Add form response"
           git push
-        env:
-          FORM_PHONE: ${{ secrets.FORM_PHONE }} # Example secret for phone
-          FORM_GUESTS: ${{ secrets.FORM_GUESTS }} # Example secret for guests
